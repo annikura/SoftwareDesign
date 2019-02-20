@@ -1,6 +1,7 @@
 package ru.hse.spb.interpreter.command.impl;
 
 import org.junit.Test;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import java.io.IOException;
@@ -24,19 +25,19 @@ public class WcTest {
     @Test
     public void testApply() throws IOException {
         final Wc wc = new Wc(null);
-        assertEquals("1  1  37  src/test/resources/1.txt", wc.apply("wc src/test/resources/1.txt").getResult());
+        assertEquals("1  1  37  src/test/resources/1.txt", wc.apply("wc src/test/resources/1.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyIfFileNotFound() throws IOException {
         final Wc wc = new Wc(null);
-        assertEquals("", wc.apply("wc src/test/resources/notExist.txt").getResult());
+        assertEquals("", wc.apply("wc src/test/resources/notExist.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyWithPredResult() throws IOException {
         final Wc wc = new Wc(null);
         assertEquals("2  5  20  ",
-                wc.apply("wc ", new BashCommandResult("123 456 789\n 123 123")).getResult());
+                wc.apply("wc ", new BashCommandContext(), new BashCommandResult("123 456 789\n 123 123")).getResult());
     }
 }

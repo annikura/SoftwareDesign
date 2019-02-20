@@ -2,6 +2,7 @@ package ru.hse.spb.interpreter.command.impl;
 
 import org.springframework.stereotype.Component;
 import ru.hse.spb.interpreter.command.BashCommand;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import javax.annotation.Nonnull;
@@ -20,7 +21,7 @@ public class Exit implements BashCommand {
 
     @Nonnull
     @Override
-    public BashCommandResult apply(String inputString) {
+    public BashCommandResult apply(String inputString, BashCommandContext context) {
         System.exit(0);
         return new BashCommandResult("");
     }

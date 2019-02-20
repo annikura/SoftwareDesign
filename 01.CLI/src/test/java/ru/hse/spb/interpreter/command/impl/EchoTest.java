@@ -1,6 +1,7 @@
 package ru.hse.spb.interpreter.command.impl;
 
 import org.junit.Test;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 
 import static org.junit.Assert.*;
 
@@ -21,10 +22,10 @@ public class EchoTest {
     public void testApply() {
         final Echo echo = new Echo();
         assertEquals("123 123 123 123 123",
-                echo.apply("echo        123  123 123 123             123").getResult());
+                echo.apply("echo        123  123 123 123             123", new BashCommandContext()).getResult());
         assertEquals("123 123 123 123123",
-                echo.apply("echo        123  123 123 123123").getResult());
+                echo.apply("echo        123  123 123 123123", new BashCommandContext()).getResult());
         assertEquals("",
-                echo.apply("echo    ").getResult());
+                echo.apply("echo    ", new BashCommandContext()).getResult());
     }
 }

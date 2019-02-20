@@ -12,6 +12,7 @@ import ru.hse.spb.interpreter.Preprocessor;
 import ru.hse.spb.interpreter.Tokenizer;
 import ru.hse.spb.interpreter.command.Assignment;
 import ru.hse.spb.interpreter.command.BashCommand;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 import ru.hse.spb.interpreter.model.PipeSplitCommand;
 import ru.hse.spb.interpreter.model.Token;
@@ -36,6 +37,7 @@ public class InterpreterImpl implements Interpreter {
     private final PrintStream out;
     private final Scanner in;
     private static final Logger LOG = LoggerFactory.getLogger(Preprocessor.class);
+    private final BashCommandContext context;
 
     @Inject
     public InterpreterImpl(final List<BashCommand> commands,
@@ -52,6 +54,7 @@ public class InterpreterImpl implements Interpreter {
         this.in = in;
         this.preprocessor = preprocessor;
         this.tokenizer = tokenizer;
+        this.context = new BashCommandContext();
     }
 
     @Override
@@ -81,7 +84,7 @@ public class InterpreterImpl implements Interpreter {
     private Optional<BashCommandResult> findCommand(final String token, final BashCommandResult prevResult) {
         for (BashCommand command : commands) {
             if (command.isFits(token)) {
-                return Optional.of(command.apply(token, prevResult));
+                return Optional.of(command.apply(token, context, prevResult));
             }
         }
         try {

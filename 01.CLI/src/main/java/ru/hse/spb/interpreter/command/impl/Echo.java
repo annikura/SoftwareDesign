@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.hse.spb.interpreter.command.BashCommand;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import javax.annotation.Nonnull;
@@ -24,7 +25,7 @@ public class Echo implements BashCommand {
 
     @Override
     @Nonnull
-    public BashCommandResult apply(final String inputString) {
+    public BashCommandResult apply(final String inputString, BashCommandContext context) {
         final Optional<String> dataOpt = getData(inputString);
         return dataOpt.map(BashCommandResult::new).orElseGet(
                 () -> {

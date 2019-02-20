@@ -1,6 +1,7 @@
 package ru.hse.spb.interpreter.command.impl;
 
 import org.junit.Test;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import java.io.BufferedReader;
@@ -37,6 +38,6 @@ public class PwdTest {
         while ((line = reader.readLine()) != null) {
             lines.add(line);
         }
-        assertEquals(String.join("\n", lines), pwd.apply("pwd ").getResult());
+        assertEquals(String.join("\n", lines), pwd.apply("pwd ", new BashCommandContext()).getResult());
     }
 }

@@ -1,6 +1,7 @@
 package ru.hse.spb.interpreter.command.impl;
 
 import org.junit.Test;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import java.io.IOException;
@@ -25,39 +26,39 @@ public class GrepTest {
     @Test
     public void testApply() {
         Grep grep = new Grep(System.in);
-        assertEquals("456", grep.apply("grep 456 src/test/resources/2.txt").getResult());
+        assertEquals("456", grep.apply("grep 456 src/test/resources/2.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyWithIgnoreCase() {
         Grep grep = new Grep(System.in);
-        assertEquals("LALA\nlala\nLaLa\n1lala1", grep.apply("grep -i lala src/test/resources/ignoreCase.txt").getResult());
+        assertEquals("LALA\nlala\nLaLa\n1lala1", grep.apply("grep -i lala src/test/resources/ignoreCase.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyWithWordRegexp() {
         Grep grep = new Grep(System.in);
-        assertEquals("lala", grep.apply("grep -w lala src/test/resources/ignoreCase.txt").getResult());
-        assertEquals("lala\nLaLa\n1lala1", grep.apply("grep a src/test/resources/ignoreCase.txt").getResult());
+        assertEquals("lala", grep.apply("grep -w lala src/test/resources/ignoreCase.txt", new BashCommandContext()).getResult());
+        assertEquals("lala\nLaLa\n1lala1", grep.apply("grep a src/test/resources/ignoreCase.txt", new BashCommandContext()).getResult());
     }
 
 
     @Test
     public void testApplyWithAfterContext() {
         Grep grep = new Grep(System.in);
-        assertEquals("123\n456\n123", grep.apply("grep -A 1 2 src/test/resources/afterContext.txt").getResult());
+        assertEquals("123\n456\n123", grep.apply("grep -A 1 2 src/test/resources/afterContext.txt", new BashCommandContext()).getResult());
 
     }
     @Test
     public void testApplyWithDiffCase() {
         Grep grep = new Grep(System.in);
-        assertEquals("lala\n1lala1", grep.apply("grep lala src/test/resources/ignoreCase.txt").getResult());
+        assertEquals("lala\n1lala1", grep.apply("grep lala src/test/resources/ignoreCase.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyIfFileNotFound() throws IOException {
         Grep grep = new Grep(System.in);
-        assertEquals("", grep.apply("cat src/test/resources/notExist.txt").getResult());
+        assertEquals("", grep.apply("cat src/test/resources/notExist.txt", new BashCommandContext()).getResult());
     }
 
 
@@ -65,6 +66,6 @@ public class GrepTest {
     public void testApplyWithPredResult() throws IOException {
         Grep grep = new Grep(System.in);
         assertEquals("456",
-                grep.apply("grep 5", new BashCommandResult("123\n456\n789")).getResult());
+                grep.apply("grep 5", new BashCommandContext(), new BashCommandResult("123\n456\n789")).getResult());
     }
 }

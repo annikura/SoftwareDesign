@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hse.spb.interpreter.command.BashCommand;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 import org.apache.commons.cli.*;
 import ru.hse.spb.interpreter.model.cli.GrepCliParams;
@@ -48,13 +49,13 @@ public class Grep implements BashCommand {
 
     @Nonnull
     @Override
-    public BashCommandResult apply(String inputString) {
-        return apply(inputString, new BashCommandResult(""));
+    public BashCommandResult apply(String inputString, BashCommandContext context) {
+        return apply(inputString, context, new BashCommandResult(""));
     }
 
     @Nonnull
     @Override
-    public BashCommandResult apply(String inputString, BashCommandResult prevResult) {
+    public BashCommandResult apply(String inputString, BashCommandContext context, BashCommandResult prevResult) {
         if (!isFits(inputString)) {
             LOG.error("Unable to apply grep");
             return new BashCommandResult("");

@@ -12,11 +12,11 @@ public interface BashCommand {
     boolean isFits(final String inputString);
 
     @Nonnull
-    BashCommandResult apply(final String inputString);
+    BashCommandResult apply(final String inputString, BashCommandContext context);
 
     @Nonnull
-    default BashCommandResult apply(final String inputString, final BashCommandResult predResult) {
-        return apply(inputString);
+    default BashCommandResult apply(final String inputString, BashCommandContext context, final BashCommandResult predResult) {
+        return apply(inputString, context);
     }
 
 

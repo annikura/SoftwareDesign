@@ -1,6 +1,7 @@
 package ru.hse.spb.interpreter.command.impl;
 
 import org.junit.Test;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import java.io.IOException;
@@ -26,20 +27,20 @@ public class CatTest {
     @Test
     public void testApply() {
         final Cat cat = new Cat(null);
-        assertEquals("Приветики-Конфетики", cat.apply("cat src/test/resources/1.txt").getResult());
+        assertEquals("Приветики-Конфетики", cat.apply("cat src/test/resources/1.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyIfFileNotFound() throws IOException {
         final Cat cat = new Cat(null);
-        assertEquals("", cat.apply("cat src/test/resources/notExist.txt").getResult());
+        assertEquals("", cat.apply("cat src/test/resources/notExist.txt", new BashCommandContext()).getResult());
     }
 
     @Test
     public void testApplyWithPredResult() throws IOException {
         final Cat cat = new Cat(null);
         assertEquals("123 456 789",
-                cat.apply("cat ", new BashCommandResult("123 456 789")).getResult());
+                cat.apply("cat ", new BashCommandContext(), new BashCommandResult("123 456 789")).getResult());
     }
 
 }

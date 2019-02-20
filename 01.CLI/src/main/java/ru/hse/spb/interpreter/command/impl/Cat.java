@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.hse.spb.interpreter.command.BashCommand;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 import ru.hse.spb.interpreter.model.BashCommandResult;
 
 import javax.annotation.Nonnull;
@@ -41,7 +42,7 @@ public class Cat implements BashCommand {
 
     @Override
     @Nonnull
-    public BashCommandResult apply(final String inputString) {
+    public BashCommandResult apply(final String inputString, BashCommandContext context) {
         final Optional<List<String>> dataOpt = getData(inputString);
         if (!dataOpt.isPresent()) {
             LOG.warn("unable to apply command cat to " + inputString);
@@ -56,7 +57,7 @@ public class Cat implements BashCommand {
 
     @Override
     @Nonnull
-    public BashCommandResult apply(final String inputString, final BashCommandResult predResult) {
+    public BashCommandResult apply(final String inputString, BashCommandContext context, final BashCommandResult predResult) {
         final Optional<List<String>> dataOpt = getData(inputString);
         if (!dataOpt.isPresent()) {
             LOG.warn("unable to apply command cat to " + inputString);
@@ -71,7 +72,7 @@ public class Cat implements BashCommand {
             final String result = String.join("\n", textByFileName.values());
             return new BashCommandResult(result);
         }
-        return apply(inputString);
+        return apply(inputString, context);
     }
 
 
