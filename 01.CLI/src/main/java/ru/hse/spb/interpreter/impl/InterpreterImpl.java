@@ -46,7 +46,8 @@ public class InterpreterImpl implements Interpreter {
                            final PrintStream out,
                            final Scanner in,
                            final Preprocessor preprocessor,
-                           final Tokenizer tokenizer) {
+                           final Tokenizer tokenizer,
+                           final BashCommandContext context) {
         this.commands = commands;
         this.assignment = assignment;
         this.envVariables = envVariables;
@@ -54,7 +55,7 @@ public class InterpreterImpl implements Interpreter {
         this.in = in;
         this.preprocessor = preprocessor;
         this.tokenizer = tokenizer;
-        this.context = new BashCommandContext();
+        this.context = context;
     }
 
     @Override

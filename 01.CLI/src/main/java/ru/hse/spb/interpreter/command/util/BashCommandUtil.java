@@ -25,13 +25,15 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hse.spb.interpreter.command.BashCommandContext;
 
 public class BashCommandUtil {
     private static final Logger LOG = LoggerFactory.getLogger(BashCommandUtil.class);
 
     @Nonnull
     public static Map<String, InputStream> getInputStreams(final List<String> fileNames,
-                                                           final InputStream defaultInputStream) {
+                                                           final InputStream defaultInputStream,
+                                                           final BashCommandContext context) {
         final Map<String, InputStream> inputStreamMap = new HashMap<>();
         if (getNonEmptyString(fileNames).size() == 0) {
             inputStreamMap.put("", defaultInputStream);
@@ -40,7 +42,7 @@ public class BashCommandUtil {
                     .filter(fileName -> fileName != null && !fileName.equals(""))
                     .forEach(fileName -> {
                         try {
-                            inputStreamMap.put(fileName, new FileInputStream(fileName));
+                            inputStreamMap.put(fileName, new FileInputStream(context.getPath(fileName)));
                         } catch (FileNotFoundException e) {
                             LOG.warn("file " + fileName + " not found", e);
                         }

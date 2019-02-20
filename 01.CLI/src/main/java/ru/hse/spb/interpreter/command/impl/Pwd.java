@@ -26,6 +26,6 @@ public class Pwd implements BashCommand {
     @Nonnull
     @Override
     public BashCommandResult apply(String inputString, BashCommandContext context) {
-        return new BashCommandResult(new File("").getAbsolutePath());
+        return new BashCommandResult(context.getPath("."));
     }
 }

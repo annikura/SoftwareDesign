@@ -49,7 +49,7 @@ public class Wc implements BashCommand {
             LOG.warn("unable to apply command wc to " + inputString);
             return new BashCommandResult("");
         }
-        final Map<String, InputStream> inputStreamByFileName = getInputStreams(dataOpt.get(), defaultInputStream);
+        final Map<String, InputStream> inputStreamByFileName = getInputStreams(dataOpt.get(), defaultInputStream, context);
         final Map<String, String> textByFileName= readFiles(inputStreamByFileName);
         final String result = getResult(textByFileName);
         return new BashCommandResult(result);

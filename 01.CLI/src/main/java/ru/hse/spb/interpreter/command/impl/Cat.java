@@ -49,7 +49,7 @@ public class Cat implements BashCommand {
             return new BashCommandResult("");
         }
         final Map<String, InputStream> inputStreamByFileName =
-                getInputStreams(dataOpt.get(), defaultInputStream);
+                getInputStreams(dataOpt.get(), defaultInputStream, context);
         final Map<String, String> textByFileName = readFiles(inputStreamByFileName);
         final String result = String.join("\n", textByFileName.values());
         return new BashCommandResult(result);

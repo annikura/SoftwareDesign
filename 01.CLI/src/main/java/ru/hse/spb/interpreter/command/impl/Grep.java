@@ -78,7 +78,7 @@ public class Grep implements BashCommand {
         } else {
             final List<String> fileNames = grepCliParams.getFileNames();
             final Map<String, InputStream> inputStreamByFileName =
-                    getInputStreams(fileNames, defaultInputStream);
+                    getInputStreams(fileNames, defaultInputStream, context);
             textByFileName.putAll(readFiles(inputStreamByFileName));
         }
         return new BashCommandResult(getMatchedText(textByFileName, grepCliParams));
