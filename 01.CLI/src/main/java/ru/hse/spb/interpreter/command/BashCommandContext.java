@@ -26,11 +26,7 @@ public class BashCommandContext {
     }
 
     public String cd(String path) throws NoSuchDirectoryException {
-        if (Paths.get(path).isAbsolute()) {
-            processPath = Paths.get(path).normalize().toString();
-        } else {
-            processPath = Paths.get(processPath, path).normalize().toString();
-        }
+        processPath = getPath(path);
         if (!checkPathIsDir(processPath)){
             throw new NoSuchDirectoryException("Not a directory: " + processPath);
         }
@@ -44,8 +40,3 @@ public class BashCommandContext {
 }
 
 
-class NoSuchDirectoryException extends Exception {
-    public NoSuchDirectoryException(String message) {
-        super(message);
-    }
-}
